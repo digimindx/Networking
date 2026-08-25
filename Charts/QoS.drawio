@@ -1,0 +1,36 @@
+<mxfile host="Electron" pages="2">
+  <diagram name="Defenitions" id="udmrKoIkPdInxcsc8qZt">
+    <mxGraphModel dx="1254" dy="1040" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="FsTpDxQWnoxq1WT__kqG-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#666666;fillColor=#f5f5f5;align=center;verticalAlign=middle;rounded=0;fontColor=#333333;" value="&lt;font style=&quot;font-size: 25px;&quot;&gt;QoS&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 25px;&quot;&gt;Quality of Service&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="82" width="320" x="400" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="FsTpDxQWnoxq1WT__kqG-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#666666;fillColor=#f5f5f5;align=center;verticalAlign=middle;rounded=0;fontColor=#333333;fontSize=20;" value="&lt;p style=&quot;direction: rtl;&quot;&gt;&lt;font&gt;مجموعة من التقنيات التي تدير موارد الشبكة (Bandwidth, Latency, Jitter، Packet Loss) لضمان أن التطبيقات الحرجة (مثل الصوت عبر IP - VoIP، والفيديو المؤتمت) تحصل على الأولوية في المعالجة والنقل.&lt;/font&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="82" width="1080" x="40" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="FsTpDxQWnoxq1WT__kqG-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#2D7600;fillColor=#60a917;align=right;verticalAlign=middle;rounded=0;fontColor=#FFFFFF;" value="&lt;p&gt;&lt;/p&gt;&lt;div style=&quot;text-align: center; direction: rtl;&quot;&gt;&lt;b style=&quot;background-color: transparent;&quot;&gt;&lt;font style=&quot;font-size: 25px;&quot;&gt;Bandwidth&lt;br&gt;&lt;br&gt;&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center; direction: rtl;&quot;&gt;&lt;font style=&quot;font-size: 25px;&quot;&gt;&lt;b style=&quot;background-color: transparent;&quot;&gt;عرض النطاق الترددي:&lt;/b&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt; هو&lt;/span&gt;&lt;b style=&quot;background-color: transparent;&quot;&gt;&amp;nbsp;السعة القصوى&lt;/b&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt; للأنبوب الذي تمر عبره البيانات خلال فترة زمنية محددة&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center; direction: rtl;&quot;&gt;&lt;font style=&quot;font-size: 25px;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&amp;nbsp;(تُقاس بـ Mbps أو Gbps). يعبر عن كمية البيانات التي &lt;/span&gt;&lt;i style=&quot;background-color: transparent;&quot;&gt;يمكن&lt;/i&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt; نقلها في الثانية، وليس بالضرورة السرعة الفعلية للنقل.&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="238" width="520" x="600" y="282" as="geometry" />
+        </mxCell>
+        <mxCell id="FsTpDxQWnoxq1WT__kqG-4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#001DBC;fillColor=#0050ef;align=right;verticalAlign=middle;rounded=0;fontColor=#ffffff;" value="&lt;p&gt;&lt;/p&gt;&lt;div style=&quot;text-align: center; direction: rtl;&quot;&gt;&lt;font style=&quot;font-size: 25px;&quot;&gt;&lt;b&gt;&lt;b&gt;Latency&lt;br&gt;&lt;/b&gt;&lt;br&gt;زمن التأخير:&lt;/b&gt; هو &lt;b&gt;الاستجابة أو الوقت المستغرق&lt;/b&gt; لنقل حزمة البيانات من المصدر إلى الوجهة والعودة (Round-Trip Time - RTT)، ويُقاس بالمللي ثانية (ms). كلما قل هذا الرقم، كلما كان الاتصال أسرع في الاستجابة.&lt;/font&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="238" width="520" x="40" y="282" as="geometry" />
+        </mxCell>
+        <mxCell id="FsTpDxQWnoxq1WT__kqG-5" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#3700CC;fillColor=#6a00ff;align=right;verticalAlign=middle;rounded=0;fontColor=#ffffff;" value="&lt;p&gt;&lt;/p&gt;&lt;div style=&quot;text-align: center; direction: rtl;&quot;&gt;&lt;font style=&quot;font-size: 25px;&quot;&gt;&lt;b&gt;&lt;b&gt;Packet Loss&lt;/b&gt;&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center; direction: rtl;&quot;&gt;&lt;font style=&quot;font-size: 25px;&quot;&gt;&lt;b&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center; direction: rtl;&quot;&gt;&lt;font style=&quot;font-size: 25px;&quot;&gt;&lt;b&gt;فقدان الحزم:&lt;/b&gt; هو &lt;b&gt;نسبة حزم البيانات التي تفشل في الوصول&lt;/b&gt; إلى وجهتها وتضيع أثناء الطريق بسبب ازدحام الشبكة، أخطاء الكابلات، أو ضعف الإشارة. يُقاس كنسبة مئوية (%)، ويؤدي ارتفاعه إلى تقطيع الاتصال أو الحاجة لإعادة إرسال البيانات.&lt;/font&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="238" width="520" x="40" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="FsTpDxQWnoxq1WT__kqG-6" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#A50040;fillColor=#d80073;align=right;verticalAlign=middle;rounded=0;fontColor=#ffffff;" value="&lt;p&gt;&lt;/p&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;div style=&quot;text-align: center; direction: rtl;&quot;&gt;&lt;font style=&quot;font-size: 25px;&quot;&gt;&lt;b&gt;&lt;b&gt;Jitter&lt;/b&gt;&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center; direction: rtl;&quot;&gt;&lt;font style=&quot;font-size: 25px;&quot;&gt;&lt;b&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: center; direction: rtl;&quot;&gt;&lt;font style=&quot;font-size: 25px;&quot;&gt;&lt;b&gt;الاضطراب:&lt;/b&gt; هو &lt;b&gt;مدى التفاوت والذبذبة في زمن التأخير&lt;/b&gt; بين حزم البيانات المتتالية. إذا وصلت الحزمة الأولى خلال 20ms والثانية خلال 100ms، فهذا التذبذب يُسمى Jitter، وهو العدو الأول للتطبيقات اللحظية مثل المكالمات الصوتية (VoIP) والألعاب.&lt;/font&gt;&lt;/div&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="238" width="520" x="600" y="560" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="2VbfZWZaKh1gpvwHrpbi" name="Page-2">
+    <mxGraphModel dx="1254" dy="1040" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
