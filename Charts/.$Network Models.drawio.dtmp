@@ -1,0 +1,82 @@
+<mxfile host="Electron" agent="Gemini">
+  <diagram id="OSI_DoD_Mapping" name="Page-1">
+    <mxGraphModel dx="1414" dy="841" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="col1_header" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="OSI Model" vertex="1">
+          <mxGeometry height="30.6" width="160" x="40" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="col2_header" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="DoD Model" vertex="1">
+          <mxGeometry height="30.6" width="160" x="200" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="col3_header" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="protocols" vertex="1">
+          <mxGeometry height="30.6" width="240" x="360" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="col4_header" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" value="devices/apps" vertex="1">
+          <mxGeometry height="30.6" width="180" x="600" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="row1_col1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=2;fillColor=#60a917;fontSize=15;fontColor=#ffffff;" value="layer 5, 6, 7" vertex="1">
+          <mxGeometry height="153" width="160" x="40" y="240.6" as="geometry" />
+        </mxCell>
+        <mxCell id="row1_col2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;strokeWidth=2;fillColor=#1ba1e2;fontSize=15;fontColor=#ffffff;" value="application" vertex="1">
+          <mxGeometry height="153" width="160" x="200" y="240.6" as="geometry" />
+        </mxCell>
+        <mxCell id="row1_col3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#A50040;strokeWidth=2;fillColor=#d80073;fontSize=15;fontColor=#ffffff;" value="dns, dhcp, ntp,&lt;br&gt;snmp, https, ftp,&lt;br&gt;ssh, telnet, http,&lt;br&gt;pop3... others" vertex="1">
+          <mxGeometry height="153" width="240" x="360" y="240.6" as="geometry" />
+        </mxCell>
+        <mxCell id="row1_col4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#314354;strokeWidth=2;fillColor=#647687;fontSize=15;fontColor=#ffffff;" value="web server,&lt;br&gt;mail server,&lt;br&gt;browser,&lt;br&gt;mail client..." vertex="1">
+          <mxGeometry height="153" width="180" x="600" y="240.6" as="geometry" />
+        </mxCell>
+        <mxCell id="row2_col1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=2;fillColor=#60a917;fontSize=15;fontColor=#ffffff;" value="layer 4" vertex="1">
+          <mxGeometry height="81.6" width="160" x="40" y="393.6" as="geometry" />
+        </mxCell>
+        <mxCell id="row2_col2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;strokeWidth=2;fillColor=#1ba1e2;fontSize=15;fontColor=#ffffff;" value="host-to-host" vertex="1">
+          <mxGeometry height="81.6" width="160" x="200" y="393.6" as="geometry" />
+        </mxCell>
+        <mxCell id="row2_col3_tcp" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#A50040;strokeWidth=2;fillColor=#d80073;fontSize=15;fontColor=#ffffff;" value="tcp" vertex="1">
+          <mxGeometry height="81.6" width="150" x="360" y="393.6" as="geometry" />
+        </mxCell>
+        <mxCell id="row2_col3_udp" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#A50040;strokeWidth=2;fillColor=#d80073;fontSize=15;fontColor=#ffffff;" value="udp" vertex="1">
+          <mxGeometry height="81.6" width="90" x="510" y="393.6" as="geometry" />
+        </mxCell>
+        <mxCell id="row2_col4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#314354;strokeWidth=2;fillColor=#647687;fontSize=15;fontColor=#ffffff;" value="gateway" vertex="1">
+          <mxGeometry height="81.6" width="180" x="600" y="393.6" as="geometry" />
+        </mxCell>
+        <mxCell id="row3_col1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=2;fillColor=#60a917;fontSize=15;fontColor=#ffffff;" value="layer 3" vertex="1">
+          <mxGeometry height="81.6" width="160" x="40" y="475.2" as="geometry" />
+        </mxCell>
+        <mxCell id="row3_col2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;strokeWidth=2;fillColor=#1ba1e2;fontSize=15;fontColor=#ffffff;" value="internet" vertex="1">
+          <mxGeometry height="81.6" width="160" x="200" y="475.2" as="geometry" />
+        </mxCell>
+        <mxCell id="row3_col3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#A50040;strokeWidth=2;fillColor=#d80073;fontSize=15;fontColor=#ffffff;" value="ip, icmp, igmp" vertex="1">
+          <mxGeometry height="81.6" width="240" x="360" y="475.2" as="geometry" />
+        </mxCell>
+        <mxCell id="row3_col4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#314354;strokeWidth=2;fillColor=#647687;fontSize=15;fontColor=#ffffff;" value="router, firewall&lt;br&gt;layer 3 switch" vertex="1">
+          <mxGeometry height="81.6" width="180" x="600" y="475.2" as="geometry" />
+        </mxCell>
+        <mxCell id="row4_col1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=2;fillColor=#60a917;fontSize=15;fontColor=#ffffff;" value="layer 2" vertex="1">
+          <mxGeometry height="81.6" width="160" x="40" y="556.8" as="geometry" />
+        </mxCell>
+        <mxCell id="row5_col1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=2;fillColor=#60a917;fontSize=15;fontColor=#ffffff;" value="layer 1" vertex="1">
+          <mxGeometry height="81.6" width="160" x="40" y="638.4000000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="row4_5_col2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;strokeWidth=2;fillColor=#1ba1e2;fontSize=15;fontColor=#ffffff;" value="network&lt;br&gt;access" vertex="1">
+          <mxGeometry height="163.2" width="160" x="200" y="556.8" as="geometry" />
+        </mxCell>
+        <mxCell id="row4_col3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#A50040;strokeWidth=2;fillColor=#d80073;fontSize=15;fontColor=#ffffff;" value="arp (mac), rarp" vertex="1">
+          <mxGeometry height="81.6" width="240" x="360" y="556.8" as="geometry" />
+        </mxCell>
+        <mxCell id="row5_col3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#A50040;strokeWidth=2;fillColor=#d80073;fontSize=15;fontColor=#ffffff;" value="ethernet, token ring" vertex="1">
+          <mxGeometry height="81.6" width="240" x="360" y="638.4000000000001" as="geometry" />
+        </mxCell>
+        <mxCell id="row4_col4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#314354;strokeWidth=2;fillColor=#647687;fontSize=15;fontColor=#ffffff;" value="bridge&lt;br&gt;layer 2 switch" vertex="1">
+          <mxGeometry height="81.6" width="180" x="600" y="556.8" as="geometry" />
+        </mxCell>
+        <mxCell id="row5_col4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#314354;strokeWidth=2;fillColor=#647687;fontSize=15;fontColor=#ffffff;" value="hub" vertex="1">
+          <mxGeometry height="81.6" width="180" x="600" y="638.4000000000001" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
