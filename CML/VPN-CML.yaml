@@ -1,0 +1,561 @@
+annotations:
+  - border_color: '#808080FF'
+    border_radius: 0
+    border_style: ''
+    color: '#FFD600'
+    thickness: 1
+    type: rectangle
+    x1: -200.0
+    y1: -200.0
+    x2: 480.0
+    y2: 120.0
+    z_index: 0
+  - border_color: '#808080FF'
+    border_radius: 0
+    border_style: ''
+    color: '#CCFF00'
+    thickness: 1
+    type: rectangle
+    x1: -200.0
+    y1: -40.0
+    x2: 480.0
+    y2: 120.0
+    z_index: 1
+  - border_color: '#808080FF'
+    border_radius: 0
+    border_style: ''
+    color: '#00E0FF'
+    thickness: 1
+    type: rectangle
+    x1: -200.0
+    y1: 120.0
+    x2: 480.0
+    y2: 120.0
+    z_index: 2
+nodes:
+  - boot_disk_size: null
+    configuration:
+      - name: iosxe_config.txt
+        content: |-
+          hostname HQ-RTR
+          !
+          ! --- 1. Underlay & Interfaces ---
+          interface GigabitEthernet1
+           ip address 203.0.113.1 255.255.255.252
+           ip nat outside
+           no shutdown
+          !
+          interface GigabitEthernet2
+           ip address 192.168.10.1 255.255.255.0
+           ip nat inside
+           no shutdown
+          !
+          interface Tunnel0
+           ip address 10.0.0.1 255.255.255.0
+           ip ospf network point-to-multipoint
+           ip nhrp map 10.0.0.1 203.0.113.1
+           ip nhrp network-id 100
+           ip nhrp holdtime 300
+           ip nhrp redirect
+           tunnel source GigabitEthernet1
+           tunnel mode gre multipoint
+           tunnel protection ipsec profile FLEXVPN_PROFILE
+           no shutdown
+          !
+          ! --- 2. Routing (OSPF & Default Route) ---
+          ip route 0.0.0.0 0.0.0.0 203.0.113.2
+          !
+          router ospf 1
+           network 192.168.10.0 0.0.0.255 area 0
+           network 10.0.0.0 0.0.0.255 area 0
+          !
+          ! --- 3. NAT Exemption ---
+          ip nat inside source list NAT-ACL interface GigabitEthernet1 overload
+          ip access-list extended NAT-ACL
+           deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+           deny ip 192.168.10.0 0.0.0.255 192.168.30.0 0.0.0.255
+           permit ip 192.168.10.0 0.0.0.255 any
+          !
+          ! --- 4. IKEv2 & IPsec ---
+          crypto ikev2 keyring HQ-KEYS
+           peer BRANCHES
+            address 0.0.0.0 0.0.0.0
+            pre-shared-key Cisco123
+          !
+          crypto ikev2 profile HQ-PROFILE
+           match identity remote address 0.0.0.0 0.0.0.0
+           authentication local pre-share
+           authentication remote pre-share
+           keyring local HQ-KEYS
+           lifetime 240
+          !
+          crypto ipsec profile FLEXVPN_PROFILE
+           set ikev2-profile HQ-PROFILE
+          !
+          ! --- 5. Remote Access (AnyConnect SSL VPN) ---
+          ip local pool ANYCONNECT-POOL 10.10.10.10 10.10.10.50
+          !
+          webvpn
+           ! anyconnect image disk0:/anyconnect-win-4.10.01075-webdeploy-k9.pkg 1
+           anyconnect enable
+           anyconnect certificate-trust
+          !
+          aaa authentication webvpn
+          !
+          webvpn context default
+           gateway 203.0.113.1
+          !
+          group-policy ANYCONNECT-POL internal
+           address-pools pool ANYCONNECT-POOL
+           vpn-tunnel-protocol ssl-client
+           split-tunnel-policy tunnelspecified
+           split-tunnel-network-list value SPLIT-ACL
+          !
+          access-list SPLIT-ACL extended permit ip 192.168.10.0 0.0.0.255 any
+          !
+          username vpnuser password 0 Cisco123
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n0
+    image_definition: null
+    label: HQ-RTR
+    node_definition: csr1000v
+    parameters: {}
+    ram: null
+    tags: []
+    x: 160
+    y: -160
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: GigabitEthernet1
+        slot: 0
+        type: physical
+      - id: i2
+        label: GigabitEthernet2
+        slot: 1
+        type: physical
+      - id: i3
+        label: GigabitEthernet3
+        slot: 2
+        type: physical
+      - id: i4
+        label: GigabitEthernet4
+        slot: 3
+        type: physical
+  - boot_disk_size: null
+    configuration:
+      - name: ios_config.txt
+        content: |-
+          hostname INET-RTR
+          !
+          interface GigabitEthernet0/0
+           ip address 203.0.113.2 255.255.255.252
+           no shutdown
+          !
+          interface GigabitEthernet0/1
+           ip address 203.0.113.6 255.255.255.252
+           no shutdown
+          !
+          interface GigabitEthernet0/2
+           ip address 203.0.113.10 255.255.255.252
+           no shutdown
+          !
+          interface GigabitEthernet0/3
+           ip address 198.51.100.1 255.255.255.0
+           no shutdown
+          !
+          router ospf 1
+           default-information originate always
+          !
+          ip route 0.0.0.0 0.0.0.0 Null0
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n1
+    image_definition: null
+    label: INET-RTR (Internet Cloud)
+    node_definition: iosv
+    parameters: {}
+    ram: null
+    tags: []
+    x: 680
+    y: 0
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: GigabitEthernet0/0
+        slot: 0
+        type: physical
+      - id: i2
+        label: GigabitEthernet0/1
+        slot: 1
+        type: physical
+      - id: i3
+        label: GigabitEthernet0/2
+        slot: 2
+        type: physical
+      - id: i4
+        label: GigabitEthernet0/3
+        slot: 3
+        type: physical
+  - boot_disk_size: null
+    configuration:
+      - name: iosxe_config.txt
+        content: |-
+          hostname BR1-RTR
+          !
+          ! --- 1. Underlay & Interfaces ---
+          interface GigabitEthernet1
+           ip address 203.0.113.5 255.255.255.252
+           ip nat outside
+           no shutdown
+          !
+          interface GigabitEthernet2
+           ip address 192.168.20.1 255.255.255.0
+           ip nat inside
+           no shutdown
+          !
+          interface Tunnel0
+           ip address 10.0.0.2 255.255.255.0
+           ip ospf network point-to-multipoint
+           ip nhrp nhs 10.0.0.1 nbma 203.0.113.1
+           ip nhrp network-id 100
+           ip nhrp holdtime 300
+           tunnel source GigabitEthernet1
+           tunnel mode gre multipoint
+           tunnel protection ipsec profile FLEXVPN_PROFILE
+           no shutdown
+          !
+          ! --- 2. Routing (OSPF & Default Route) ---
+          ip route 0.0.0.0 0.0.0.0 203.0.113.6
+          !
+          router ospf 1
+           network 192.168.20.0 0.0.0.255 area 0
+           network 10.0.0.0 0.0.0.255 area 0
+          !
+          ! --- 3. NAT Exemption ---
+          ip nat inside source list NAT-ACL interface GigabitEthernet1 overload
+          ip access-list extended NAT-ACL
+           deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+           deny ip 192.168.20.0 0.0.0.255 192.168.30.0 0.0.0.255
+           permit ip 192.168.20.0 0.0.0.255 any
+          !
+          ! --- 4. IKEv2 & IPsec ---
+          crypto ikev2 keyring BR1-KEYS
+           peer HQ
+            address 203.0.113.1
+            pre-shared-key Cisco123
+          !
+          crypto ikev2 profile BR1-PROFILE
+           match identity remote address 203.0.113.1 255.255.255.255
+           authentication local pre-share
+           authentication remote pre-share
+           keyring local BR1-KEYS
+          !
+          crypto ipsec profile FLEXVPN_PROFILE
+           set ikev2-profile BR1-PROFILE
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n2
+    image_definition: null
+    label: BR1-RTR
+    node_definition: csr1000v
+    parameters: {}
+    ram: null
+    tags: []
+    x: 160
+    y: 0
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: GigabitEthernet1
+        slot: 0
+        type: physical
+      - id: i2
+        label: GigabitEthernet2
+        slot: 1
+        type: physical
+      - id: i3
+        label: GigabitEthernet3
+        slot: 2
+        type: physical
+      - id: i4
+        label: GigabitEthernet4
+        slot: 3
+        type: physical
+  - boot_disk_size: null
+    configuration:
+      - name: iosxe_config.txt
+        content: |-
+          hostname BR2-RTR
+          !
+          ! --- 1. Underlay & Interfaces ---
+          interface GigabitEthernet1
+           ip address 203.0.113.9 255.255.255.252
+           ip nat outside
+           no shutdown
+          !
+          interface GigabitEthernet2
+           ip address 192.168.30.1 255.255.255.0
+           ip nat inside
+           no shutdown
+          !
+          interface Tunnel0
+           ip address 10.0.0.3 255.255.255.0
+           ip ospf network point-to-multipoint
+           ip nhrp nhs 10.0.0.1 nbma 203.0.113.1
+           ip nhrp network-id 100
+           ip nhrp holdtime 300
+           tunnel source GigabitEthernet1
+           tunnel mode gre multipoint
+           tunnel protection ipsec profile FLEXVPN_PROFILE
+           no shutdown
+          !
+          ! --- 2. Routing (OSPF & Default Route) ---
+          ip route 0.0.0.0 0.0.0.0 203.0.113.10
+          !
+          router ospf 1
+           network 192.168.30.0 0.0.0.255 area 0
+           network 10.0.0.0 0.0.0.255 area 0
+          !
+          ! --- 3. NAT Exemption ---
+          ip nat inside source list NAT-ACL interface GigabitEthernet1 overload
+          ip access-list extended NAT-ACL
+           deny ip 192.168.30.0 0.0.0.255 192.168.10.0 0.0.0.255
+           deny ip 192.168.30.0 0.0.0.255 192.168.20.0 0.0.0.255
+           permit ip 192.168.30.0 0.0.0.255 any
+          !
+          ! --- 4. IKEv2 & IPsec ---
+          crypto ikev2 keyring BR2-KEYS
+           peer HQ
+            address 203.0.113.1
+            pre-shared-key Cisco123
+          !
+          crypto ikev2 profile BR2-PROFILE
+           match identity remote address 203.0.113.1 255.255.255.255
+           authentication local pre-share
+           authentication remote pre-share
+           keyring local BR2-KEYS
+          !
+          crypto ipsec profile FLEXVPN_PROFILE
+           set ikev2-profile BR2-PROFILE
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n3
+    image_definition: null
+    label: BR2-RTR
+    node_definition: csr1000v
+    parameters: {}
+    ram: null
+    tags: []
+    x: 160
+    y: 160
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: GigabitEthernet1
+        slot: 0
+        type: physical
+      - id: i2
+        label: GigabitEthernet2
+        slot: 1
+        type: physical
+      - id: i3
+        label: GigabitEthernet3
+        slot: 2
+        type: physical
+      - id: i4
+        label: GigabitEthernet4
+        slot: 3
+        type: physical
+  - boot_disk_size: null
+    configuration:
+      - name: node.cfg
+        content: |-
+          !this is a shell script which will be sourced at boot
+          hostname PC-HQ
+          configurable user account
+          USERNAME=cisco
+          PASSWORD=cisco
+          ip addr add 192.168.10.10/24 dev eth0
+          ip link set eth0 up
+          ip route add default via 192.168.10.1
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n4
+    image_definition: null
+    label: PC-HQ
+    node_definition: desktop
+    parameters: {}
+    ram: null
+    tags: []
+    x: -120
+    y: -160
+    interfaces:
+      - id: i0
+        label: eth0
+        slot: 0
+        type: physical
+  - boot_disk_size: null
+    configuration:
+      - name: node.cfg
+        content: |-
+          this is a shell script which will be sourced at boot
+          hostname PC-BR1
+          configurable user account
+          USERNAME=cisco
+          PASSWORD=cisco
+          ip addr add 192.168.20.10/24 dev eth0
+          ip link set eth0 up
+          ip route add default via 192.168.20.1
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n5
+    image_definition: null
+    label: PC-BR1
+    node_definition: desktop
+    parameters: {}
+    ram: null
+    tags: []
+    x: -120
+    y: 0
+    interfaces:
+      - id: i0
+        label: eth0
+        slot: 0
+        type: physical
+  - boot_disk_size: null
+    configuration:
+      - name: node.cfg
+        content: |-
+          !this is a shell script which will be sourced at boot
+          hostname PC-BR2
+          configurable user account
+          USERNAME=cisco
+          PASSWORD=cisco
+          ip addr add 192.168.30.10/24 dev eth0
+          ip link set eth0 up
+          ip route add default via 192.168.30.1
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n6
+    image_definition: null
+    label: PC-BR2
+    node_definition: desktop
+    parameters: {}
+    ram: null
+    tags: []
+    x: -120
+    y: 160
+    interfaces:
+      - id: i0
+        label: eth0
+        slot: 0
+        type: physical
+  - boot_disk_size: null
+    configuration:
+      - name: node.cfg
+        content: |-
+          this is a shell script which will be sourced at boot
+          hostname Remote-PC
+          configurable user account
+          USERNAME=cisco
+          PASSWORD=cisco
+          ip addr add 198.51.100.10/24 dev eth0
+          ip link set eth0 up
+          ip route add default via 198.51.100.1
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n7
+    image_definition: null
+    label: Remote-PC
+    node_definition: desktop
+    parameters: {}
+    ram: null
+    tags: []
+    x: 960
+    y: 0
+    interfaces:
+      - id: i0
+        label: eth0
+        slot: 0
+        type: physical
+links:
+  - id: l0
+    n1: n0
+    n2: n1
+    i1: i1
+    i2: i1
+    conditioning: {}
+    label: HQ-RTR-GigabitEthernet1<->INET-RTR (Internet Cloud)-GigabitEthernet0/0
+  - id: l1
+    n1: n2
+    n2: n1
+    i1: i1
+    i2: i2
+    conditioning: {}
+    label: BR1-RTR-GigabitEthernet1<->INET-RTR (Internet Cloud)-GigabitEthernet0/1
+  - id: l2
+    n1: n3
+    n2: n1
+    i1: i1
+    i2: i3
+    conditioning: {}
+    label: BR2-RTR-GigabitEthernet1<->INET-RTR (Internet Cloud)-GigabitEthernet0/2
+  - id: l3
+    n1: n0
+    n2: n4
+    i1: i2
+    i2: i0
+    conditioning: {}
+    label: HQ-RTR-GigabitEthernet2<->desktop-0-eth0
+  - id: l4
+    n1: n2
+    n2: n5
+    i1: i2
+    i2: i0
+    conditioning: {}
+    label: BR1-RTR-GigabitEthernet2<->desktop-1-eth0
+  - id: l5
+    n1: n3
+    n2: n6
+    i1: i2
+    i2: i0
+    conditioning: {}
+    label: BR2-RTR-GigabitEthernet2<->desktop-2-eth0
+  - id: l6
+    n1: n7
+    n2: n1
+    i1: i0
+    i2: i4
+    conditioning: {}
+    label: Remote-PC-eth0<->INET-RTR (Internet Cloud)-GigabitEthernet0/3
+lab:
+  description: ''
+  notes: ''
+  title: Lab at Tue 09:19 AM
+  version: 0.2.2
