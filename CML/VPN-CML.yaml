@@ -184,7 +184,7 @@ nodes:
     parameters: {}
     ram: null
     tags: []
-    x: 680
+    x: 480
     y: 0
     interfaces:
       - id: i0
@@ -497,7 +497,7 @@ nodes:
     parameters: {}
     ram: null
     tags: []
-    x: 960
+    x: 680
     y: 0
     interfaces:
       - id: i0
@@ -532,21 +532,21 @@ links:
     i1: i2
     i2: i0
     conditioning: {}
-    label: HQ-RTR-GigabitEthernet2<->desktop-0-eth0
+    label: HQ-RTR-GigabitEthernet2<->PC-HQ-eth0
   - id: l4
     n1: n2
     n2: n5
     i1: i2
     i2: i0
     conditioning: {}
-    label: BR1-RTR-GigabitEthernet2<->desktop-1-eth0
+    label: BR1-RTR-GigabitEthernet2<->PC-BR1-eth0
   - id: l5
     n1: n3
     n2: n6
     i1: i2
     i2: i0
     conditioning: {}
-    label: BR2-RTR-GigabitEthernet2<->desktop-2-eth0
+    label: BR2-RTR-GigabitEthernet2<->PC-BR2-eth0
   - id: l6
     n1: n7
     n2: n1
