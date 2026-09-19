@@ -1,0 +1,276 @@
+annotations: []
+nodes:
+  - boot_disk_size: null
+    configuration:
+      - name: node.cfg
+        content: |-
+          # this is a shell script which will be sourced at boot
+          hostname inserthostname-here
+          # configurable user account
+          USERNAME=cisco
+          PASSWORD=cisco
+          ###
+          sudo ip addr add 192.168.1.10/24 dev eth0
+          sudo ip link set eth0 up
+          sudo ip route add default via 192.168.1.1
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n0
+    image_definition: null
+    label: desktop-0
+    node_definition: desktop
+    parameters: {}
+    ram: null
+    tags: []
+    x: -320
+    y: -40
+    interfaces:
+      - id: i0
+        label: eth0
+        slot: 0
+        type: physical
+  - boot_disk_size: null
+    configuration:
+      - name: iosxe_config.txt
+        content: |-
+          enable
+          configure terminal
+          hostname HQ-Router
+
+          ! --- 1. إصلاح الواجهات الأساسية ---
+          interface GigabitEthernet1
+           description Link-to-Server1-WAN
+           ip address 10.0.0.1 255.255.255.0
+           no shutdown
+           exit
+          !
+          interface GigabitEthernet2
+           description Link-to-SW1-LAN
+           ip address 192.168.1.1 255.255.255.0
+           no shutdown
+           exit
+
+          ! --- 2. التصنيف (Classification) ---
+          class-map match-all VOICE-CLASS
+           match ip dscp ef
+          !
+          ip access-list extended DATA-TRAFFIC
+           permit tcp any any eq 80
+           permit tcp any any eq 443
+           permit tcp any any eq 5201
+          !
+          class-map match-any DATA-CLASS
+           match access-group name DATA-TRAFFIC
+
+          ! --- 3. تحديد السياسة (Policy-Map) ---
+          policy-map QOS-EDGE-POLICY
+           class VOICE-CLASS
+            priority 512
+           class DATA-CLASS
+            bandwidth percent 30
+            set dscp af21
+           class class-default
+            fair-queue
+          exit
+
+          ! --- 4. التطبيق الصحيح على منفذ الـ WAN (GigabitEthernet1) ---
+          interface GigabitEthernet1
+           service-policy output QOS-EDGE-POLICY
+           shape average 2000000
+          exit
+
+          end
+          write memory
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n1
+    image_definition: null
+    label: R1-HQ
+    node_definition: csr1000v
+    parameters: {}
+    ram: null
+    tags: []
+    x: 40
+    y: 80
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: GigabitEthernet1
+        slot: 0
+        type: physical
+      - id: i2
+        label: GigabitEthernet2
+        slot: 1
+        type: physical
+      - id: i3
+        label: GigabitEthernet3
+        slot: 2
+        type: physical
+      - id: i4
+        label: GigabitEthernet4
+        slot: 3
+        type: physical
+  - boot_disk_size: null
+    configuration:
+      - name: iosxe_config.txt
+        content: |+
+          # this is a shell script which will be sourced at boot
+          hostname inserthostname-here
+          # configurable user account
+          USERNAME=cisco
+          PASSWORD=cisco
+          #
+          # 1. إعداد عنوان IP، قناع الشبكة (Netmask)، وتفعيل المنفذ
+          sudo ifconfig eth0 10.0.0.100 netmask 255.255.255.0 up
+
+          # 2. تعيين المسار الافتراضي (Default Gateway)
+          sudo route add default gw 10.0.0.1
+
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n2
+    image_definition: null
+    label: server-0
+    node_definition: server
+    parameters: {}
+    ram: null
+    tags: []
+    x: 240
+    y: 80
+    interfaces:
+      - id: i0
+        label: eth0
+        slot: 0
+        type: physical
+  - boot_disk_size: null
+    configuration:
+      - name: node.cfg
+        content: |-
+          # this is a shell script which will be sourced at boot
+          hostname inserthostname-here
+          # configurable user account
+          USERNAME=cisco
+          PASSWORD=cisco
+          ###
+
+          sudo ip addr add 192.168.1.20/24 dev eth0
+          sudo ip link set eth0 up
+          sudo ip route add default via 192.168.1.1
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n3
+    image_definition: null
+    label: Phone1
+    node_definition: alpine
+    parameters: {}
+    ram: null
+    tags: []
+    x: -320
+    y: 200
+    interfaces:
+      - id: i0
+        label: eth0
+        slot: 0
+        type: physical
+  - boot_disk_size: null
+    configuration:
+      - name: ios_config.txt
+        content: |-
+          enable
+          configure terminal
+          hostname SW1
+
+          interface GigabitEthernet0/0
+           description Link-to-R1
+           switchport mode access
+           no shutdown
+          !
+          interface GigabitEthernet0/1
+           description Link-to-PC1-Data
+           switchport mode access
+           no shutdown
+          !
+          interface GigabitEthernet0/2
+           description Link-to-Phone1-Voice
+           switchport mode access
+           no shutdown
+
+          end
+          write memory
+    cpu_limit: null
+    cpus: null
+    data_volume: null
+    hide_links: false
+    id: n4
+    image_definition: null
+    label: iosvl2-0
+    node_definition: iosvl2
+    parameters: {}
+    ram: null
+    tags: []
+    x: -160
+    y: 80
+    interfaces:
+      - id: i0
+        label: Loopback0
+        type: loopback
+      - id: i1
+        label: GigabitEthernet0/0
+        slot: 0
+        type: physical
+      - id: i2
+        label: GigabitEthernet0/1
+        slot: 1
+        type: physical
+      - id: i3
+        label: GigabitEthernet0/2
+        slot: 2
+        type: physical
+      - id: i4
+        label: GigabitEthernet0/3
+        slot: 3
+        type: physical
+links:
+  - id: l0
+    n1: n1
+    n2: n2
+    i1: i1
+    i2: i0
+    conditioning: {}
+    label: R1-HQ-GigabitEthernet1<->server-0-eth0
+  - id: l1
+    n1: n4
+    n2: n1
+    i1: i1
+    i2: i2
+    conditioning: {}
+    label: iosvl2-0-GigabitEthernet0/0<->R1-HQ-GigabitEthernet2
+  - id: l2
+    n1: n4
+    n2: n0
+    i1: i2
+    i2: i0
+    conditioning: {}
+    label: iosvl2-0-GigabitEthernet0/1<->desktop-0-eth0
+  - id: l3
+    n1: n4
+    n2: n3
+    i1: i3
+    i2: i0
+    conditioning: {}
+    label: iosvl2-0-GigabitEthernet0/2<->Phone1-eth0
+lab:
+  description: ''
+  notes: ''
+  title: Lab at Sat 18:49 PM
+  version: 0.2.2
